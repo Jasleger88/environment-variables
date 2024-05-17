@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/stylesheets/style.css" />
+  <title>Document</title>
+</head>
+
+<body>
+  <%- include('./partials/nav') %>
+    <h1>"Workout Needs Categories</h1>
+            <h2>Equipment: <%= workoutNeeds.equipment %></h2>
+            <p> Membership: <%= workoutNeeds.membership %></p>
+            <p> Training: <%= workoutNeeds.trainerPreference %> </p>
+            <p> Duration: <%= workoutNeeds.duration %></p>
+            <form action="/workoutNeeds/<%=workoutNeeds._id%>?_method=DELETE" method="POST">
+              <button type="submit">Delete <%= workoutNeeds.name %></button>
+            </form>
+            <a href="/workoutNeeds/<%= workoutNeeds._id %>/edit">Edit <%= workoutNeeds.name %></a>
+
+            <a href="/workoutNeeds">Back to Workout Needs</a>
+</body>
+
+</html>

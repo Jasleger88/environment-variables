@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/stylesheets/style.css" />
+  <title>Document</title>
+</head>
+
+<body>
+  <%- include('./partials/nav') %>
+    <h1>"Workout Needs Categories"</h1>
+    <ul>
+      <% workoutNeeds.forEach(workoutNeeds=> { %>
+        <li>
+          <a href="/workoutNeeds/<%= workoutNeeds.id%>">
+            <%= workoutNeeds.equipment %>
+        </li>
+        <% }) %>
+    </ul>
+    <img
+    class="workout-picture2"
+    src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cGVyc29uYWwlMjB0cmFpbmVyfGVufDB8fDB8fHww"
+    alt="workout includes a trainer assisting a person with pushups"/>
+</body>
+
+</html>

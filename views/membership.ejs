@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/stylesheets/style.css" />
+  <title>Membership</title>
+</head>
+<body>
+  <%- include('./partials/nav') %>
+  <h1>Membership</h1>
+  <ul>
+    <% workoutNeeds.forEach(workoutNeed => { %>
+      <h2><%= workoutNeed.equipment %></h2>
+      <p><%= workoutNeed.trainerPreference %></p>
+    <% }) %>
+  </ul>
+</body>
+</html>

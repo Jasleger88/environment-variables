@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/stylesheets/style.css" />
+  <title>Schedule</title>
+</head>
+<body>
+  <%- include('./partials/nav') %>
+  <h1>Schedule</h1>
+  <p> Workout Schedule: Pick your schedule</p>
+  <ul>
+    <% workoutNeeds.forEach(workoutNeed => { %>
+      <li><%= workoutNeed.schedule %></li>
+    <% }) %>
+  </ul>
+</body>
+</html>
