@@ -7,13 +7,24 @@
   <title>Schedule</title>
 </head>
 <body>
-  <%- include('./partials/nav') %>
-  <h1>Schedule</h1>
-  <p> Workout Schedule: Pick your schedule</p>
-  <ul>
-    <% workoutNeeds.forEach(workoutNeed => { %>
-      <li><%= workoutNeed.schedule %></li>
-    <% }) %>
-  </ul>
+  <% include('./partials/nav') %>
+  <div class="container">
+    <h1>Schedule</h1>
+    <div class="intro">
+      <p>Workout Schedule: Pick your schedule</p>
+    </div>
+    <div class="schedule-input">
+      <textarea placeholder="Write your own schedule here"></textarea>
+      <button>Submit</button>
+    </div>
+    <div class="schedule-list">
+        <% workoutNeeds.forEach(workoutNeed => { %>
+          <li><%= workoutNeed.schedule %></li>
+        <% }) %>
+    </div>
+    <div class="image-container">
+      <img class="workout-picture-four" src="https://images.unsplash.com/photo-1594381898411-846e7d193883?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fGV4ZXJjaXNlfGVufDB8fDB8fHww" alt="female athlete demonstrating an abdominal exercise"/>
+    </div>
+  </div>
 </body>
 </html>

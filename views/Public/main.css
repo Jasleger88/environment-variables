@@ -1,0 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=Bungee&display=swap');
+
+body {
+    background:black;
+    background-image: center;
+    color: white;
+}
+nav {
+    display: flex;
+    justify-content: space-around;
+    background-color: #333;
+    padding: 1rem;
+}
+nav a {
+    color: Orange;
+    text-decoration: underline;
+    padding: 10px 20px;
+    transition: background-color 0.3s;
+    font-size: 30px;
+    font-weight: bold;
+}
+.dropdown {
+    position: relative;
+}
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #444;
+    min-width: 100px;
+    border-radius: 5px;
+    padding: 10px;
+}
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+.workout-picture1 {
+    width: 100%;
+    max-width: 500px; 
+    transition: transform 0.3s, opacity 0.3s; 
+    cursor: pointer; 
+}
+.workout-picture1:hover {
+    transform: scale(1.1);
+}
+.workout-picture1:active {
+    opacity: 0.7;
+}
