@@ -10,17 +10,25 @@
 
 <body>
   <%- include('./partials/nav') %>
-    <h1>"Workout Needs Categories</h1>
-            <h2>Equipment: <%= workoutNeeds.equipment %></h2>
-            <p> Membership: <%= workoutNeeds.membership %></p>
-            <p> Training: <%= workoutNeeds.trainerPreference %> </p>
-            <p> Duration: <%= workoutNeeds.duration %></p>
-            <form action="/workoutNeeds/<%=workoutNeeds._id%>?_method=DELETE" method="POST">
-              <button type="submit">Delete <%= workoutNeeds.name %></button>
-            </form>
-            <a href="/workoutNeeds/<%= workoutNeeds._id %>/edit">Edit <%= workoutNeeds.name %></a>
-
-            <a href="/workoutNeeds">Back to Workout Needs</a>
+  <div class="workout-details">
+    <h1>Workout Needs Categories</h1>
+    <div class="equipment-info">
+      <div class="equipment-image">
+        <img src="https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8d29ya291dHxlbnwwfHwwfHx8MA%3D%3D" alt="Equipment Image">
+      </div>
+      <div class="equipment-details">
+        <h2>Equipment: <%= workoutNeeds.equipment %></h2>
+        <p>Membership: <%= workoutNeeds.membership %></p>
+        <p>Training: <%= workoutNeeds.trainerPreference %></p>
+        <p>Duration: <%= workoutNeeds.duration %></p>
+      </div>
+    </div>
+    <form action="/workoutNeeds/<%=workoutNeeds._id%>?_method=DELETE" method="POST">
+      <button type="submit">Delete <%= workoutNeeds.name %></button>
+    </form>
+    <a href="/workoutNeeds/<%= workoutNeeds._id %>/edit">Edit <%= workoutNeeds.name %></a>
+    <a href="/workoutNeeds">Back to Workout Needs</a>
+  </div>
 </body>
 
 </html>

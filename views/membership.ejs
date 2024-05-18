@@ -1,25 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="/stylesheets/style.css" />
-  <title>Membership</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <title>Membership</title>
 </head>
 <body>
-  <%- include('./partials/nav') %>
-  <h1>Membership</h1>
-  <div class = "membership-info">
-    <% workoutNeeds.forEach(workoutNeed => { %>
-      <h2><%= workoutNeed.equipment %></h2>
-      <p><%= workoutNeed.trainerPreference %></p>
-    <% }) %>
-  </div>
-  <div class = "membership-details">
-  <img class="exercise"
-  src="https://images.unsplash.com/photo-1556742208-999815fca738?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NTB8fG1lbWJlcnNoaXB8ZW58MHx8MHx8fDA%3D"
-  alt="swiping card for membership access"/>
-  <textarea placeholder ="Enter your membership details here"></textarea>
-</div>
+    <%- include('./partials/nav') %>
+    <h1>Membership</h1>
+    <div class="membership-info">
+        <% workoutNeeds.forEach(workoutNeed => { %>
+        <h2><%= workoutNeed.equipment %></h2>
+        <p><%= workoutNeed.trainerPreference %></p>
+        <% }) %>
+    </div>
+    <div class="membership-details">
+        <img class="exercise"
+            src="https://images.unsplash.com/photo-1556742208-999815fca738?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NTB8fG1lbWJlcnNoaXB8ZW58MHx8MHx8fDA%3D%3D"
+            alt="swiping card for membership access" />
+        <textarea placeholder="Enter your membership details here"></textarea>
+    </div>
 </body>
 </html>
