@@ -2,20 +2,29 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=>>, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/stylesheets/style.css" />
     <title>Document</title>
 </head>
 <body>
-    <h1>Workout Needs</h1>
-    <form action ="/workoutNeeds" method = "post">
-        <label for = "equipment">Equipment Type</label>
-        <input type = "text" name = "equipment" id="equipment">
-        <label for = "trainerPreference">trainerPreference</label>
-        <input type = "text" name = "trainerPreference" id= "trainerPreference">
-        <label for = "duration">Duration</label>
-        <input type ="text" name = "duration" id="duration">
-        <button type = "submit"> add new Workout needs here </button>
+    <%- include('./partials/nav') %>
+    <h1>Edit Workout Need</h1>
+    <form action="/workoutNeeds/<%= workoutNeed._id %>?_method=PUT" method="POST">
+      <label for="equipment">Equipment Type</label>
+      <input type="text" name="workoutNeed[equipment]" value="<%= workoutNeed.equipment %>">
+  
+      <label for="membership">Membership</label>
+      <input type="text" name="workoutNeed[membership]" value="<%= workoutNeed.membership %>">
+  
+      <label for="trainerPreference">Trainer Preference</label>
+      <input type="text" name="workoutNeed[trainerPreference]" value="<%= workoutNeed.trainerPreference %>">
+  
+      <label for="duration">Duration</label>
+      <input type="text" name="workoutNeed[duration]" value="<%= workoutNeed.duration %>">
+  
+      <button type="submit">Update</button>
     </form>
+    <a href="/workoutNeeds">Back to Workout Needs</a>
+  </body>
 </body>
 </html>
