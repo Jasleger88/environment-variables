@@ -7,7 +7,6 @@
   <link rel="stylesheet" href="/stylesheets/style.css" />
   <title>Document</title>
 </head>
-
 <body>
   <%- include('./partials/nav') %>
   <div class="workout-details">
@@ -23,6 +22,7 @@
         <p>Duration: <%= workoutNeeds.duration %></p>
       </div>
     </div>
+    <form action="/workoutNeeds/<%=workoutNeeds._id%>?_method=DELETE" method="POST">
     <form action="/workoutNeeds/<%=workoutNeeds._id %>?_method=DELETE" method="POST">
       <button type="submit">Delete <%= workoutNeeds.name %></button>
     </form>
@@ -30,5 +30,4 @@
     <a href="/workoutNeeds">Back to Workout Needs</a>
   </div>
 </body>
-
 </html>

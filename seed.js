@@ -1,4 +1,4 @@
-//CONNECT TO THE DATABASE
+
 const mongoose = require('mongoose');
 const workoutNeeds = require('./workoutNeeds');
 require('dotenv').config();

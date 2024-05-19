@@ -100,8 +100,7 @@ app.get("/workoutNeeds/:workoutNeedsId/edit", async (req, res) => {
 
 // adjust the following:
 app.listen(port, () => {
-   
+
   console.log('Listening on port 3000');
   console.log(`Your secret is ${ process.env.SECRET_PASSWORD }`);
 });
-
