@@ -3,23 +3,40 @@ const express = require('express');
 const mongoose = require('mongoose')
 const WorkoutNeeds = require('./workoutNeeds')
 const port = 3000;
+const authController = require("./controllers/auth.js");
 const path = require('path')
-const methodOveride = require('method-override');
+const methodOverride = require('method-override');
 const morgan = require("morgan");
+const session = require('express-session');
+
 
 const app = express();
 
-mongoose.connect(process.env.MONGODB_URI)
+mongoose.connect(process.env.MONGODB_URI);
+mongoose.connection.on('connected', () => {
+  console.log(`Connected to MongoDB ${mongoose.connection.name}.`);
+})
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
-app.use(methodOveride("_method"));
+app.use(methodOverride('_method'));
 app.use(morgan('dev'));
 app.use(express.static(path.join(__dirname, "public")));
+app.use("/auth", authController);
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true,
+  })
+);
+
 
 
 app.get('/', (req, res) => {
-  res.render('home.ejs');
+  res.render('home.ejs', {
+    user: req.session.user,
+  });
 });
 
 //Create a route for each category in my WorkoutNeeds List 
@@ -37,7 +54,8 @@ app.get('/workoutNeeds/:workoutNeedsId', async (req, res) => {
   })
 })
 app.get('/new-workout', (req, res) => {
-  res.render("new.ejs")
+  const workoutNeed = 5;
+  res.render("new.ejs", {workoutNeed})
 })
 
 app.get('/equipment', async (req, res) => {
@@ -96,11 +114,48 @@ app.get("/workoutNeeds/:workoutNeedsId/edit", async (req, res) => {
     workoutNeeds: findNewWorkout,
   });
 });
+router.post("/sign-in", async (req, res) => {
+  // First, get the user from the database
+  const userInDatabase = await User.findOne({ username: req.body.username });
+  if (!userInDatabase) {
+    return res.send("Login failed. Please try again.");
+  }
+  app.get("/vip-lounge", (req, res) => {
+    if (req.session.user) {
+      res.send(`Welcome to the party ${req.session.user.username}.`);
+    } else {
+      res.send("Sorry, no guests allowed.");
+    }
+  });
+  
+
+  // There is a user! Time to test their password with bcrypt
+  const validPassword = bcrypt.compareSync(
+    req.body.password,
+    userInDatabase.password
+  );
+  if (!validPassword) {
+    return res.send("Login failed. Please try again.");
+  }
+
+
+  req.session.user = {
+    username: userInDatabase.username,
+  };
+
+  res.redirect("/");
+});
+
 
 
 // adjust the following:
 app.listen(port, () => {
-
-  console.log('Listening on port 3000');
-  console.log(`Your secret is ${ process.env.SECRET_PASSWORD }`);
+  let port;
+if (process.env.PORT) {
+  port = process.env.PORT;
+} else {
+  port = 3000;
+}
+console.log(`The express app is ready on port ${port}!`);
+console.log(`Your secret is ${ process.env.SECRET_PASSWORD }`);
 });
