@@ -23,12 +23,22 @@
         <p>Duration: <%= workoutNeeds.duration %></p>
       </div>
     </div>
-    <form action="/workoutNeeds/<%=workoutNeeds._id%>?_method=DELETE" method="POST">
     <form action="/workoutNeeds/<%=workoutNeeds._id %>?_method=DELETE" method="POST">
       <button type="submit">Delete <%= workoutNeeds.name %></button>
     </form>
     <a href="/workoutNeeds/<%= workoutNeeds._id %>/edit">Edit <%= workoutNeeds.name %></a>
     <a href="/workoutNeeds">Back to Workout Needs</a>
+    <a href ="/workoutNeeds/<%=workoutNeeds._id %>/reviews">Add a review</a>
   </div>
+  <% workoutNeeds.reviews.forEach(review => { %>
+    <div>
+      <p> 
+        <%= review.text %>
+      </p>
+    </div>
+<% }) %>
+
+  
+
 </body>
 </html>

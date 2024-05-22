@@ -12,20 +12,21 @@
   <h1>Workout Needs</h1>
     <%- include('./partials/nav') %>
       <h1>Edit Workout Need</h1>
-      <form action="/workoutNeeds/" method="POST">
+      <form action="/workoutNeeds/<%= workoutNeed._id %>?_method=PUT" method="POST">
+        <input type="hidden" name="_method" value="PUT">
         <label for="equipment">Equipment Type</label>
-        <input type="text" name="equipment"  id="equipment">
+        <input type="text" name="equipment"  id="equipment" value="<%= workoutNeed.equipment %>">
 
         <label for="membership">Membership</label>
-        <input type="text" name="membership" id="membership">
+        <input type="text"  name="membership" id="membership" value="<%= workoutNeed.membership %>">
 
         <label for="trainerPreference">Trainer Preference</label>
-        <input type="text" name="trainerPreference" id=" trainerPreference" >
+        <input type="text" name="trainerPreference" id=" trainerPreference" value="<%= workoutNeed.trainerPreference %>">
 
         <label for="duration">Duration</label>
-        <input type="text" name="duration" id="duration">
+        <input type="text" name="duration" id="duration" value="<%= workoutNeed.duration %>">
 
-        <button type="submit">Add</button>
+        <button type="submit">Update</button>
       </form>
       <a href="/workoutNeeds">Back to Workout Needs</a>
 </body>
