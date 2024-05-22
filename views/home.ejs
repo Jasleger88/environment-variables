@@ -9,29 +9,7 @@
 </head>
 
 <body>
-    <%- include('./partials/nav') %>
-    <a href="/auth/sign-up">Sign up</a>
-    <% if (user) { %>
-        <h1>Welcome to the app, <%= user.username %>!</h1>
-        <% } else { %>
-        <h1>Welcome to the app, guest.</h1>
-        <p>
-          <a href="/auth/sign-up">Sign up</a> or <a href="/auth/sign-in">sign in</a>.
-        </p>
-        <% } %>
-        <% if (user) { %>
-            <h1>Welcome to the app, <%= user.username %>!</h1>
-            <p>
-              <!-- new sign out link -->
-              <a href="/auth/sign-out">Sign out</a>
-            </p>
-            <% } else { %>
-            <h1>Welcome to the app, guest.</h1>
-            <p>
-              <a href="/auth/sign-up">Sign up</a> or <a href="/auth/sign-in">Sign in</a>.
-            </p>
-            <% } %>
-                    
+    <%- include('./partials/nav') %>                
     <div class="home" id="workout-page">
         <h1 id="workout-title">Workout Needs</h1>
         <div id="pictureone">

@@ -1,6 +1,14 @@
 <nav>
-    <a href="/">Home</a>
-    <div class="dropdown">
+    <a href="/">Welcome to the Home Page</a>
+      <div class=" guest-login">
+        <% if (user) { %>
+          <a href="/auth/sign-out">Sign out</a>
+          <% } else { %>
+          <a href="/auth/sign-up">Sign Up</a>
+          <a href="/auth/sign-in">Sign In</a>
+          <% } %>
+      </div>
+       <div class="dropdown">
       <a href="/workoutNeeds">Workout Needs</a>
       <div class="dropdown-content">
         <a href="/equipment">Equipment</a>
@@ -8,5 +16,4 @@
         <a href="/schedule">Schedule</a>
         <a href="/new-workout">New Workout Needs</a>
       </div>
-    </div>
   </nav>

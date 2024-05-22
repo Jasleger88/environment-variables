@@ -7,8 +7,8 @@ const path = require('path')
 const methodOverride = require('method-override');
 const morgan = require("morgan");
 const session = require('express-session');
-const User = require(".models/user");
-// const authRouter = require("./controllers/authController");
+// const User = require(".models/user");
+
 
 
 const app = express();
@@ -23,7 +23,6 @@ app.use(express.urlencoded({ extended: false }))
 app.use(methodOverride('_method'));
 app.use(morgan('dev'));
 app.use(express.static(path.join(__dirname, "public")));
-app.use("/auth", authController);
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
@@ -38,8 +37,16 @@ app.use((req, res, next) => {
   next();
 });
 
-// Routes
 app.use("/auth", authController);
+
+app.use((req, res, next) => {
+  if (req.session.message) {
+    res.locals.message = req.session.message;
+    req.session.message = null;
+  }
+  next();
+});
+
 
 app.get('/', (req, res) => {
   res.render('home.ejs', { user: req.session.user });
@@ -49,8 +56,8 @@ app.get('/workoutNeeds', async (req, res) => {
   try {
     const workoutNeeds = await WorkoutNeeds.find();
     res.render('workoutNeeds.ejs', { workoutNeeds });
-  } catch (err) {
-    res.status(500).send(err.message);
+  } catch (error) {
+    res.render ("error.ejs", {error: error.message})
   }
 });
 
@@ -58,8 +65,8 @@ app.get('/workoutNeeds/:workoutNeedsId', async (req, res) => {
   try {
     const workoutNeeds = await WorkoutNeeds.findById(req.params.workoutNeedsId);
     res.render('show.ejs', { workoutNeeds });
-  } catch (err) {
-    res.status(500).send(err.message);
+  } catch (error) {
+    res.render ("error.ejs", {error: error.message})
   }
 });
 
@@ -67,15 +74,14 @@ app.get('/new-workout', (req, res) => {
   res.render("new.ejs");
 });
 
-// Create routes for each category dynamically
 const categories = ['equipment', 'membership', 'schedule', 'trainerPreference', 'duration'];
 categories.forEach(category => {
   app.get(`/${category}`, async (req, res) => {
     try {
       const workoutNeeds = await WorkoutNeeds.find();
       res.render(`${category}.ejs`, { workoutNeeds });
-    } catch (err) {
-      res.status(500).send(err.message);
+    } catch (error) {
+      res.render ("error.ejs", {error: error.message})
     }
   });
 });
@@ -84,8 +90,8 @@ app.post('/workoutNeeds', async (req, res) => {
   try {
     await WorkoutNeeds.create(req.body);
     res.redirect("/workoutNeeds");
-  } catch (err) {
-    res.status(500).send(err.message);
+  } catch (error) {
+    res.render ("error.ejs", {error: error.message})
   }
 });
 
@@ -93,8 +99,8 @@ app.delete('/workoutNeeds/:workoutNeedsId', async (req, res) => {
   try {
     await WorkoutNeeds.findByIdAndDelete(req.params.workoutNeedsId);
     res.redirect("/workoutNeeds");
-  } catch (err) {
-    res.status(500).send(err.message);
+  } catch (error) {
+    res.render ("error.ejs", {error: error.message})
   }
 });
 
@@ -102,8 +108,8 @@ app.get("/workoutNeeds/:workoutNeedsId/edit", async (req, res) => {
   try {
     const workoutNeeds = await WorkoutNeeds.findById(req.params.workoutNeedsId);
     res.render("edit.ejs", { workoutNeeds });
-  } catch (err) {
-    res.status(500).send(err.message);
+  } catch (error) {
+    res.render ("error.ejs", {error: error.message})
   }
 });
 
@@ -111,8 +117,8 @@ app.put('/workoutNeeds/:workoutNeedsId', async (req, res) => {
   try {
     const workoutNeeds = await WorkoutNeeds.findByIdAndUpdate(req.params.workoutNeedsId, req.body, { new: true });
     res.send(workoutNeeds);
-  } catch (err) {
-    res.status(500).send(err.message);
+  } catch (error) {
+    res.render ("error.ejs", {error: error.message})
   }
 });
 
@@ -120,26 +126,41 @@ app.post('/search', async (req, res) => {
   try {
     const workoutNeeds = await WorkoutNeeds.find({ membership: req.body.query });
     if (!workoutNeeds.length) {
-      res.status(400).send({ error: "No task was found" });
+      res.redirect({ error: "No task was found" });
     } else {
-      res.status(200).send(workoutNeeds);
+      res.send(workoutNeeds);
     }
-  } catch (err) {
-    res.status(500).send(err.message);
+  } catch (error) {
+    res.render ("error.ejs", {error: error.message})
   }
 });
 
-app.post("/sign-in", async (req, res) => {
+app.post("/workoutNeeds", async (req, res) => {
   try {
-    const userInDatabase = await User.findOne({ username: req.body.username });
-    if (!userInDatabase) {
-      return res.send("Login failed. Please try again.");
-    }
-    // Password validation logic (bcrypt) would go here
-  } catch (err) {
-    res.status(500).send(err.message);
+    await workoutNeeds.create(req.body);
+    req.session.message = "Workout Need successfully created.";
+    res.redirect("/workoutNeeds");
+  } catch (error) {
+    req.session.message = error.message;
+    res.redirect("/workoutNeeds");
   }
 });
+  if (req.session.user) {
+    const workoutNeeds = await workoutNeeds.create(req.body);
+    res.redirect("/workoutNeeds");
+  } else {
+    res.redirect("/auth/sign-in");
+  }
+  
+app.put("/workoutNeeds/:workoutNeedId", async (req, res) => {
+  const updatedNeed = await WorkoutNeeds.findByIdAndUpdate(
+    req.params.workoutNeeds,
+    req.body,
+    { new: true }
+  );
+  res.send(updatedNeed);
+});
+
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
